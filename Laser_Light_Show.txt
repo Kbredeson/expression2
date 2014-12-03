@@ -1,0 +1,10 @@
+@name Laser Light Show
+@inputs 
+@outputs X Y Clk Int
+@persist 
+@trigger 
+interval(4)
+Int++
+Interval= Int / 8
+X=sin((Interval)*50)
+Y=sin((Interval)*50)

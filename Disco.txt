@@ -1,0 +1,110 @@
+@name Disco Floor
+@inputs 
+@outputs Random1:vector C Ballpos:vector
+@persist Stat Height Redhigh Redlow Greenhigh Greenlow Bluehigh Bluelow
+@trigger 
+interval(200)
+if(first()){
+    Height=150
+    Redhigh=255
+    Redlow=0
+    Greenhigh=255
+    Greenlow=0
+    Bluehigh=255
+    Bluelow=0
+    Ball=0
+}
+R=owner():lastSaid():lower():explode(" ")
+if(R[1,string]==".height"){
+    Height=R[2,string]:toNumber()
+}
+HeightVec=vec(0,0,Height)
+if(R[1,string]==".ballhead"){
+    Ball=R[2,string]:toNumber()
+}
+Material="phoenix_storms/metalbox"
+if(first()){
+    holoCreate(1410,Ballpos,vec(3.5,3.5,3.5))
+    holoModel(1410,"icosphere3")
+    holoMaterial(1410,"debug/env_cubemap_model")
+    holoCreate(1400,entity():pos(),vec(5,5,1))
+    holoCreate(1401,entity():pos()+vec(0,60,0),vec(5,5,1))   
+    holoCreate(1402,entity():pos()+vec(0,-60,0),vec(5,5,1))   
+    holoCreate(1403,entity():pos()+vec(60,0,0),vec(5,5,1))   
+    holoCreate(1404,entity():pos()+vec(60,60,0),vec(5,5,1))   
+    holoCreate(1405,entity():pos()+vec(60,-60,0),vec(5,5,1))   
+    holoCreate(1406,entity():pos()+vec(-60,60,0),vec(5,5,1))   
+    holoCreate(1407,entity():pos()+vec(-60,0,0),vec(5,5,1))   
+    holoCreate(1408,entity():pos()+vec(-60,-60,0),vec(5,5,1))
+    holoMaterial(1400,Material)
+    holoMaterial(1401,Material)
+    holoMaterial(1402,Material)
+    holoMaterial(1403,Material)
+    holoMaterial(1404,Material)
+    holoMaterial(1405,Material)
+    holoMaterial(1406,Material)
+    holoMaterial(1407,Material)
+    holoMaterial(1408,Material)
+}
+if(R[1,string]==".red"){
+    A1=R[2,string]:explode(",")
+    Redhigh=A1[1,string]:toNumber()
+    Redlow=A1[2,string]:toNumber()
+}
+if(R[1,string]==".green"){
+    A2=R[2,string]:explode(",")
+    Greenhigh=A2[1,string]:toNumber()
+    Greenlow=A2[2,string]:toNumber()
+}
+if(R[1,string]==".blue"){
+    A3=R[2,string]:explode(",")
+    Bluehigh=A3[1,string]:toNumber()
+    Bluelow=A3[2,string]:toNumber()
+}
+
+Red=randint(Redlow,Redhigh)
+Green=randint(Greenlow,Greenhigh)
+Blue=randint(Bluelow,Bluehigh)
+Red2=randint(Redlow,Redhigh)
+Green2=randint(Greenlow,Greenhigh)
+Blue2=randint(Bluelow,Bluehigh)
+Red3=randint(Redlow,Redhigh)
+Green3=randint(Greenlow,Greenhigh)
+Blue3=randint(Bluelow,Bluehigh)
+Red4=randint(Redlow,Redhigh)
+Green4=randint(Greenlow,Greenhigh)
+Blue4=randint(Bluelow,Bluehigh)
+Red5=randint(Redlow,Redhigh)
+Green5=randint(Greenlow,Greenhigh)
+Blue5=randint(Bluelow,Bluehigh)
+Red6=randint(Redlow,Redhigh)
+Green6=randint(Greenlow,Greenhigh)
+Blue6=randint(Bluelow,Bluehigh)
+holoColor(1400,vec(Red,Green,Blue))
+holoColor(1401,vec(Red2,Green2,Blue2))
+holoColor(1402,vec(Red3,Green3,Blue3))
+holoColor(1403,vec(Red4,Green4,Blue4))
+holoColor(1404,vec(Red5,Green5,Blue5))
+holoColor(1405,vec(Red6,Green6,Blue6))
+holoColor(1406,vec(Red3,Green3,Blue3))
+holoColor(1407,vec(Red5,Green5,Blue5))
+holoColor(1408,vec(Red4,Green4,Blue4))
+lightCreate(1376,entity():pos()+vec(0,0,Height),vec(Red,Green,Blue),9000,10)
+C++
+Rotatio=ang(vec(0,C,0))
+Rotation=Rotatio*3
+holoAng(1410,Rotation)
+Ballpos=Ball ? owner():pos()+vec(0,0,60) : entity():pos()+HeightVec
+holoPos(1410,Ballpos)
+if(R[1,string]==".flash"){
+    Stat=1
+}
+if(R[1,string]==".flashoff"){
+    Stat=0
+    owner():setMaterial("")
+    owner():setColor(vec(255,255,255))
+}
+if(Stat==1){
+    owner():setMaterial("models/shiny")
+    owner():setColor(vec(Red2,Green2,Blue2))
+}

@@ -1,0 +1,8 @@
+@name Clean
+@inputs 
+@outputs 
+@persist 
+@trigger 
+interval(4)
+owner():setColor(vec(255,255,255))
+owner():setMaterial("materials/models/playereevee/eievui.vtf")

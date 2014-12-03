@@ -1,0 +1,7 @@
+@name Deloreon
+@inputs 
+@outputs Car:entity
+@persist 
+@trigger 
+interval(4)
+Car=entity():isConstrainedTo() 

@@ -1,0 +1,58 @@
+@name Pokemon Trap
+@inputs 
+@outputs Pokemon:entity Interval Int Size Console:string Name:string Perm:string Com
+@persist Q R:array Perm:string
+@trigger 
+interval(4)
+propSpawnEffect(0)
+if(first() | duped()){
+    entity():setAlpha(0)
+    hint("Pokemon Trap",5)
+    hint("By Kbredeson",5)
+    hint("You have to reset the entire E2 after trap activates",5)
+    if(holoModelAny()){
+        Run=1
+    }
+    else{
+        hint("wire_holograms_modelany is 0 on this server.",5)
+        hint("wire_holograms_modelany must be 1",5)
+}
+}
+if(Run==1){
+    holoCreate(1812,entity():pos(),vec(1,1,1),ang(vec(0,0,0)),vec(255,0,0),"models/hunter/tubes/circle2x2.mdl")
+    holoMaterial(1812,"models/props_combine/stasisshield_sheet")
+}
+findInSphere(entity():pos(),20)
+findClipToClass("Player")
+Pokemon=findResult(1)
+if(Pokemon:id()==0){
+}
+elseif(Pokemon:id()>0 & Q==0){
+    Prop=propSpawn("models/hunter/tubes/tube4x4x3.mdl",1)
+    Prop:setMaterial("models/props_interiors/metalfence007a")
+    Q=1
+}
+Size=1
+if(owner():isCrouch()){
+    Int++
+}
+Interval=Int / 500
+Interval=round(Interval,1)
+Size=Size-Interval
+if(Size<0.1){
+    Size=0.1
+}
+R=Pokemon:name():explode(" ")
+Name=R[1,string]
+if(Name=="A$AP"){
+    Name=R[2,string]
+}
+if(Prop:isValid()& Com==0){
+    Perm=Name
+    Com=1
+}
+Console="ulx size " + Perm +  " " + Size:toString() + " 0"
+
+if(owner():isCrouch() & owner():isFlashlightOn()){
+    concmd(Console)
+}

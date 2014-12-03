@@ -1,0 +1,10 @@
+@name Big Green Spot
+@inputs 
+@outputs Red Green Blue
+@persist 
+@trigger 
+interval(90)
+Red=randint(255)
+Green=randint(255)
+Blue=randint(255)
+lightCreate(1376,owner():aimPos(),vec(Red,Green,Blue),9000,9000)

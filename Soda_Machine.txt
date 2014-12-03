@@ -1,0 +1,6 @@
+@name Soda Machine
+@inputs 
+@outputs 
+@persist 
+@trigger 
+

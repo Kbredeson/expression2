@@ -1,0 +1,12 @@
+@name Grave Stone Change
+@inputs Time Prefix:string Suffix:string
+@outputs Text:string Clk
+
+interval(4)
+
+Clk=round(Time,0.1)
+
+if(Time==1){
+    Text="Prefix" + "Swag" + "Suffix"
+}
+

@@ -1,0 +1,15 @@
+@name Kill Bob
+@inputs 
+@outputs Player:entity
+@persist Player:entity
+@trigger 
+@model models/props_lab/cactus.mdl
+interval(4)
+if(first()){
+Player=findPlayerByName("Hickory Bob")
+}
+Playerpos=Player:pos()
+Button=owner():keyReload()
+if(Button==1 & $Button){
+    propSpawn("models/props_phx/huge/evildisc_corp.mdl",Playerpos,0)
+}

@@ -1,0 +1,60 @@
+@name Smart Drone
+@inputs 
+@outputs Steel:entity Active Player:entity Force Q:array
+@persist R:array Active Steel:entity Player:entity Q:array
+@trigger 
+@model models/props_phx2/garbage_metalcan001a.mdl
+interval(4)
+if(first()){
+    findByModel("models/thrusters/jetpack.mdl")
+    Q=findToArray()
+    entity():parentTo(Q[1,entity])
+    entity():parentTo(Q[2,entity])
+}
+F=owner():lastSaid()
+R=F:explode(" ")
+if(R[1,string]==".active"){
+    P=R[2,string]:lower()
+    if(P=="1"){
+        Active=1
+    }
+    if(P=="0"){
+        Active=0
+    }
+}
+if(R[1,string]==".attack" & Active){
+       findByClass("player")
+       findPlayerByName(R[2,string])
+Player=findClosest(entity():pos())
+}
+if(R[1,string]==".tele" & Active){
+    entity():setPos(Player:pos())
+    
+}
+Vector=Player:pos()-entity():pos()
+if(Active){
+    applyForce($Vector+Vector)
+    applyAngForce(ang(0,15,0))
+}
+if(R[1,string]==".force"){
+    P=R[2,string]:lower()
+    if(P=="1"){
+        Force=1
+    }
+    if(P=="0"){
+        Force=0
+    }
+}
+if(R[1,string]==".bring"){
+    P=R[2,string]:lower()
+    if(P=="1"){
+        if(Player:inVehicle()){
+        Player:vehicle():parentTo(entity())
+        Svector=owner():pos()-entity():pos()*9000
+        entity():applyForce($Svector*15+Svector)
+    }
+    }
+    if(P=="0"){
+         Player:vehicle():deparent()
+    }
+}

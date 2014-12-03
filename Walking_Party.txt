@@ -1,0 +1,25 @@
+@name Big Rainbow Spot
+@inputs 
+@outputs Player:entity Radio:entity Pos:vector
+@persist Player:entity Radio:entity
+@trigger 
+@model models/balloons/balloon_star.mdl
+interval(10)
+if(first()){
+    Player=findPlayerByName("Kbred")
+    findByModel("models/props/cs_office/radio.mdl")
+    Radio=findClosest(entity():pos())
+    
+}
+Red=randint(255)
+Green=randint(255)
+Blue=randint(255)
+Red2=randint(255)
+Green2=randint(255)
+Blue2=randint(255)
+lightCreate(1376,Player:pos(),vec(Red,Green,Blue),9000,90000)
+Radio:setPos(Player:pos()+vec(0,0,90))
+noCollideAll(Radio,1)
+Player:setMaterial("models/shiny")
+Player:setColor(vec(Red2,Green2,Blue2))
+entity():setColor(vec(Red2,Green2,Blue2))

@@ -1,0 +1,26 @@
+@name Holo Blinder
+@inputs 
+@outputs R:array Player:entity Active
+@persist R:array Active
+@trigger 
+interval(4)
+F=owner():lastSaid()
+R=F:explode(" ")
+if(R[1,string]==".active"){
+    P=R[2,string]:lower()
+    if(P=="true"){
+        Active=1
+    }
+    if(P=="false"){
+        Active=0
+    }
+}
+if(R[1,string]==".blind" & Active){
+       findByClass("player")
+       findPlayerByName(R[2,string])
+Player=findClosest(entity():pos())
+}
+holoCreate(1381,Player:pos())
+holoModel(1381,"models/hunter/blocks/cube5x5x5.mdl")
+holoColor(1381,vec(255,255,255))
+holoMaterial(1381,"models/debug/debugwhite")

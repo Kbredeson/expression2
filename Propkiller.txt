@@ -1,0 +1,49 @@
+@name Propkiller
+@inputs 
+@outputs Entity:entity R:array Player:entity
+@persist R:array Entity:entity Active
+@trigger 
+interval(4)
+if(first()){
+    propSpawnEffect(0)
+    propSpawn("models/props_junk/sawblade001a.mdl",entity():pos()+vec(0,0,2),1)
+    findByModel("models/props_junk/sawblade001a.mdl")
+    findAllowPlayer(owner())
+    findClosest(entity():pos())
+    Entity=findResult(1)
+    weld(entity(),Entity)
+    entity():propFreeze(0)
+    Entity:propFreeze(0)
+}
+F=owner():lastSaid()
+R=F:explode(" ")
+if(R[1,string]==".active"){
+    P=R[2,string]:lower()
+    if(P=="true"){
+        Active=1
+    }
+    if(P=="false"){
+        Active=0
+    }
+}
+if(R[1,string]==".active"){
+    P=R[2,string]:lower()
+    if(P=="1"){
+        Active=1
+    }
+    if(P=="0"){
+        Active=0
+    }
+}
+if(R[1,string]==".tele" & Active){
+    Entity:setPos(Player:pos())
+    
+}
+if(R[1,string]==".attack" & Active){
+       Player=findPlayerByName(R[2,string])
+}
+Vector=Player:pos()-entity():pos()
+if(Active){
+    applyForce($Vector*20+Vector)
+}
+applyAngForce(ang(0,900,0))

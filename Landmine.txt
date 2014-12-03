@@ -1,0 +1,36 @@
+@name Landmine
+@inputs 
+@outputs Detonate B1:vector B2:vector Player:entity R:array R2:array
+@persist R:array R2:array
+@trigger 
+interval(4)
+if(first()){
+    findByClass("gmod_wire_explosive")
+    findClipToClass("gmod_wire_explosive")
+    findClosest(entity():pos())
+    R=findToArray()
+    R[1,entity]:createWire(entity(),"Detonate","Detonate")
+    R[2,entity]:createWire(entity(),"Detonate","Detonate")
+    R[3,entity]:createWire(entity(),"Detonate","Detonate")
+    R[4,entity]:createWire(entity(),"Detonate","Detonate")
+}
+A1=vec(23.6,-23.6,-4.1)
+A2=vec(-23,24,-63.2)
+B1=entity():toWorld(A1)
+B2=entity():toWorld(A2)
+findInBox(B1,B2)
+findIncludeClass("Player")
+Player=findResult(1)
+if(Player:isPlayer()){
+    Detonate=1
+    findByModel("models/hunter/plates/plate1x1.mdl")
+    findClosest(entity():pos())
+    R2=findToArray()
+    entity():isConstrainedTo():setColor(0,255,0)
+    lightCreate(1421,entity():pos()+vec(0,0,45),vec(0,255,0))
+}
+else{
+    entity():isConstrainedTo():setColor(255,0,0)
+    lightCreate(1421,entity():pos()+vec(0,0,45),vec(255,0,0))
+    Detonate=0
+}

@@ -1,0 +1,87 @@
+@name Black Parade
+@inputs 
+@outputs 
+@persist 
+@trigger 
+interval(20)
+C3  =  29.72
+C3s =  31.5
+D3  =  33.37
+D3s =  35.35
+E3  =  37.456
+F3  =  39.68
+F3s =  42.04
+G3  =  44.54
+G3s =  47.19
+A3  =  50
+A3s =  52.97
+B3  =  56.12
+C4  =  59.4
+C4s =  62.9
+D4  =  66.7
+D4s =  70.7
+E4  =  74.9
+F4  =  79.3
+F4s =  84
+G4  =  89
+G4s =  94.3
+A4  = 100
+A4s = 105
+B4  = 112.2
+C5  = 118.925
+C5s = 125.993
+D5  = 133.484
+D5s = 141.42
+E5  = 149.83
+F5  = 158.740
+F5s = 168.17
+G5  = 178.179
+A5  = 200
+Tempo = 900
+if (first()  ) {timer("00",Tempo)}
+ 
+if (clk("00")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,G4),timer("01",Tempo*1.3)}
+if (clk("01")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,F4s),timer("02",Tempo)}
+if (clk("02")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,B4),timer("03",Tempo)}
+if (clk("03")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,E4),timer("04",Tempo*1.3)}
+
+if (clk("04")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,D4),timer("05",Tempo)}
+if (clk("05")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,G4),timer("06",Tempo)}
+if (clk("06")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,C4),timer("07",Tempo*1.3)}
+
+if (clk("07")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,B3),timer("08",Tempo)}
+if (clk("08")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,E4),timer("09",Tempo)}
+if (clk("09")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,A3),timer("10",Tempo)}
+if (clk("10")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,D4),timer("11",Tempo*1.3)}
+
+
+if (clk("11")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,G4),timer("12",Tempo*1.3)}
+if (clk("12")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,F4s),timer("13",Tempo)}
+if (clk("13")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,B4),timer("14",Tempo)}
+if (clk("14")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,E4),timer("15",Tempo*1.3)}
+
+if (clk("15")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,D4),timer("16",Tempo)}
+if (clk("16")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,G4),timer("17",Tempo)}
+if (clk("17")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,C4),timer("18",Tempo*1.3)}
+
+if (clk("18")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,B3),timer("19",Tempo)}
+if (clk("19")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,E4),timer("20",Tempo)}
+if (clk("20")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,A3),timer("21",Tempo)}
+if (clk("21")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,D4),timer("22",Tempo*1.3)}
+
+
+if (clk("22")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,G4),timer("12",Tempo*1.3)}
+if (clk("23")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,F4s),timer("13",Tempo)}
+if (clk("24")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,B4),timer("14",Tempo)}
+if (clk("14")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,E4),timer("15",Tempo*1.3)}
+
+if (clk("15")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,D4),timer("16",Tempo)}
+if (clk("16")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,G4),timer("17",Tempo)}
+if (clk("17")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,C4),timer("18",Tempo*1.3)}
+
+if (clk("18")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,B3),timer("19",Tempo)}
+if (clk("19")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,E4),timer("20",Tempo)}
+if (clk("20")) {soundPlay(1430,Tempo-50,"synth/tri.wav"),soundPitch(1430,A3),timer("21",Tempo)}
+if (clk("21")) {soundPlay(1430,Tempo*1.3-50,"synth/tri.wav"),soundPitch(1430,D4),timer("22",Tempo*1.3)}
+
+if (clk("22")) {soundPurge(),reset()}

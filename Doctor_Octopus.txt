@@ -1,0 +1,13 @@
+@name Doctor Octopus
+@inputs W A S D Entity:entity
+@outputs Thruster Turn
+@persist 
+@trigger 
+
+E=Entity
+
+interval(4)
+
+Thruster=W-S
+
+Turn=A-D

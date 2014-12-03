@@ -1,0 +1,31 @@
+@name Pizza Shop
+@inputs PepD ChsD PepP ChsP PepI ChsI Amount
+@outputs Spawnmnt PepA ChsA PepU ChsU
+@persist 
+@trigger 
+
+runOnTick(1)
+
+if(PepD>80){
+    PepA=0 timer("reset",3000)
+}
+elseif(Amount>=PepP){
+    PepA=1
+}
+
+if(ChsD>80){
+    ChsA=0 timer("reset",3000)
+}
+elseif(Amount>=ChsP){
+    ChsA=1
+}
+
+if(PepI & PepA){
+    PepU=1 Spawnmnt=PepP timer("reset",3000)
+}
+
+if(ChsI & PepA){
+    ChsU=1 Spawnmnt=ChsP timer("reset",3000)
+}
+
+if(clk("reset")){reset()}

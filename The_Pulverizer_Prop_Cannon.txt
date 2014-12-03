@@ -1,0 +1,34 @@
+@name The Pulverizer Prop Cannon
+@inputs 
+@outputs R:array Prop:entity Prop2:entity Aim:vector Vector:vector Q Up:vector
+@persist R:array Vector:vector Q
+@trigger 
+interval(4)
+if(first()){
+    propSpawnEffect(0)
+    propSpawn("models/hunter/tubes/tube4x4x16.mdl",entity():pos()+entity():up()*379.70,entity():angles(),1)
+}
+Up=entity():up()*725
+R=owner():lastSaid():explode(" ")
+if(R[1,string]:lower()==".arm" & Q==0){
+    findByModel("models/hunter/tubes/tube4x4x16.mdl")
+    findClosest(entity():pos())
+    Prop2=findResult(1)
+    propSpawn("models/props_c17/column02a.mdl",Up+entity():pos(),entity():angles()-ang(180,0,0),0)
+    findByModel("models/props_c17/column02a.mdl")
+    findClosest(entity():pos())
+    Prop=findResult(1)
+    Aim=Prop2:up()
+    Q=1
+    hint("Armed",2)
+}
+    Vector=Aim*999999999
+if(R[1,string]:lower()==".fire"){
+    Prop:applyForce($Vector*15+Vector)
+    Prop:applyAngForce(ang(0,900000,0))
+    if(Q==1){
+        hint("Fire in the hole!",2)
+        owner():soundPlay(1381,0,"ambient/explosions/explode_9.wav")
+    }
+    Q=0
+}

@@ -1,0 +1,39 @@
+@name Annoyance
+@inputs 
+@outputs
+@persist Q
+@trigger 
+interval(4)
+if(first()){
+    Q=0
+}
+if(owner():keyReload() & Q==0){
+    owner():soundPlay(1420,0,"synth/12_5_pwm_1760.wav")
+    owner():soundPlay(1421,0,"synth/saw_1760.wav")
+    owner():soundPlay(1422,0,"synth/sine_440.wav")
+    owner():soundPlay(1423,0,"synth/white_noise.wav")
+    owner():soundPlay(1424,0,"synth/pink_noise.wav")
+    owner():soundPlay(1425,0,"synth/saw_inverted_1760.wav")
+    owner():soundPlay(1426,0,"synth/25_pwm_880.wav")
+    owner():soundPlay(1427,0,"synth/sine.wav")
+    owner():soundPlay(1428,0,"synth/25_pwm_880.wav")
+    owner():soundPlay(1429,0,"synth/sine_1760.wav")
+    owner():soundPlay(1430,0,"synth/sine_880.wav")
+    owner():soundPlay(1431,0,"synth/square_1760.wav")
+    Q=1
+}
+elseif(!owner():keyReload()){
+    soundStop(1420,0)
+    soundStop(1421,0)
+    soundStop(1422,0)
+    soundStop(1423,0)
+    soundStop(1424,0)
+    soundStop(1425,0)
+    soundStop(1426,0)
+    soundStop(1427,0)
+    soundStop(1428,0)
+    soundStop(1429,0)
+    soundStop(1430,0)
+    soundStop(1431,0)
+    Q=0
+}

@@ -1,0 +1,35 @@
+@name Balloon Fall Protector
+@inputs 
+@outputs Zvel Entity:entity
+@persist 
+@trigger 
+interval(1)
+Vel=owner():vel()
+Zvel=Vel:z()
+if(Zvel<=-500 & !owner():inNoclip()){
+    propSpawn("models/balloons/hot_airballoon.mdl",owner():pos()-vec(0,0,100),0)
+       findByModel("models/balloons/hot_airballoon.mdl")
+       findExcludeClass("gmod_wire_hologram")
+Entity=findResult(1)
+Entity:setAlpha(0)
+    holoCreate(1379,owner():pos()-vec(0,0,50))
+    holoModel(1379,"models/balloons/hot_airballoon.mdl")
+    holoParent(1379,owner())
+    holoCreate(1380,owner():pos()-vec(0,0,50))
+    holoModel(1380,"models/balloons/hot_airballoon_basket.mdl")
+    holoScale(1380,vec(2,2,2))
+    holoParent(1380,1379)
+}
+else{
+    Entity:propDelete()
+        holoAlpha(1379,0)
+        holoAlpha(1380,0)
+}
+if(Zvel<=-3){
+    holoAlpha(1379,255)
+    holoAlpha(1380,255)
+}
+if(owner():inNoclip()){
+    holoAlpha(1379,0)
+    holoAlpha(1380,0)
+}

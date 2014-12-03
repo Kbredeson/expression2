@@ -1,0 +1,32 @@
+@name Security System
+@inputs Position:vector
+@outputs Alarm
+@persist Alarm
+@trigger 
+
+interval(1)
+Color=vec(255,0,0)
+R=ranger(500):entity()
+Human=R:isPlayer()
+Checkname=R:name()
+if(Checkname==owner():name()){
+    Iskbred=1
+}
+if(Human&Iskbred){
+    Alarmreset=1
+    Alarm=0
+}
+elseif(Human&!Iskbred){
+    Alarm=1
+}
+Text = R:name() + " Has entered your base"
+if($Alarm)
+{
+hint(Text,5)
+soundPlay(1375,0,"ambient/alarms/Caralarm.wav")
+lightCreate(1374,Position,Color,999,999)
+}
+if(Alarmreset==1){
+lightCreate(1374,Position,Color,0,0)
+soundStop(1375)
+}

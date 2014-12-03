@@ -1,0 +1,20 @@
+@name Discoball
+@inputs 
+@outputs Player:entity Radio:entity Pos:vector Rotation:angle
+@persist Player:entity Radio:entity C
+@trigger 
+interval(300)
+if(first()){
+    holoCreate(1410,entity():pos(),vec(3,3,3))
+    holoModel(1410,"icosphere3")
+    holoMaterial(1410,"debug/env_cubemap_model")
+}
+Red=randint(255)
+Green=randint(255)
+Blue=randint(255)
+lightCreate(1376,entity():pos(),vec(Red,Green,Blue),9000,10)
+C++
+Rotatio=ang(vec(0,C,0))
+Rotation=Rotatio*5
+holoAng(1410,Rotation)
+holoPos(1410,entity():pos())

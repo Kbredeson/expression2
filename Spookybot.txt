@@ -1,0 +1,26 @@
+@name Spookybot
+@inputs 
+@outputs 
+@persist 
+@trigger 
+interval(4)
+findPlayerByName("Insert person to torture's name here")
+Player=findResult(1)
+
+
+
+
+
+
+# Spoopy Fire: ambient/fire/fire_big_loop1.wav
+# Spoopy Cry: ambient/voices/crying_loop1.wav
+# Spoopy Squeal: ambient/voices/squeal1.wav
+# Spoopy Wind: ambient/wind/wind_tunnel1.wav
+# Spoopy Beam: beams/beamstart5.wav
+# Spoopy Cycletone: hl1/ambience/alien_cycletone.wav
+# Appears: music/stingers/hl1_stinger_song28.mp3
+# Nearby: sfx/skidding.wav
+# Help Me: vo/canals/arrest_helpme.wav
+# Static: hl1/ambience/deadsignal2.wav
+# Ravenholm: music/ravenholm_1.mp3 
+# Creepy Ragdoll: models/Humans/Group01/Male_Cheaple.mdl

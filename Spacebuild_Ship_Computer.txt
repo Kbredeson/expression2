@@ -1,0 +1,51 @@
+@name Spacebuild Ship Computer
+@inputs S:wirelink Water Oxygen Energy Hydrogen S2:wirelink
+@outputs 
+@persist 
+@trigger 
+interval(4)
+# Massive Sun Model: models/atmospheres/sun.mdl
+# Entire F*cking Planet: models/cerebus/cerebus.mdl
+# Earth-Looking Planet
+# Reset
+S:writeCell(2041,1)
+# Words
+S:writeString("                              ",0,1,999,666)
+S:writeString("Ship Computer",9,1,999,151)
+S:writeString("Water:",0,2,999)
+S:writeString("Oxygen:",0,3,999)
+S:writeString("Hydrogen:",0,4,999)
+S:writeString("Energy:",0,5,999)
+# Values
+S:writeString(Water:toString(),21,2,999)
+S:writeString(Oxygen:toString(),21,3,999)
+S:writeString(Hydrogen:toString(),21,4,999)
+S:writeString(Energy:toString(),21,5,999)
+# Depleted Messages
+if(Oxygen<5000){
+    S:writeString(" Low",21,3,961)
+}
+if(Oxygen<100){
+    S:writeString(" Depleted",21,3,911)
+}
+if(Water<2000){
+    S:writeString(" Low",21,2,961)
+}
+if(Water<100){
+    S:writeString(" Depleted",21,2,911)
+}
+if(Hydrogen<5000){
+    S:writeString(" Low",21,4,961)
+}
+if(Hydrogen<100){
+    S:writeString(" Depleted",21,4,911)
+}
+if(Energy<8000){
+    S:writeString(" Low",21,5,961)
+}
+if(Energy<100){
+    S:writeString(" Depleted",21,5,911)
+}
+# Words 2
+S2:writeString("                              ",0,1,999,666)
+S2:writeString("Ship Computer",9,1,999,151)

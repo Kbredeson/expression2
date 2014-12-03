@@ -1,0 +1,33 @@
+@name Portable Couch
+@inputs 
+@outputs R:array P:vector
+@persist R:array
+@trigger 
+interval(4)
+if(first()){
+    if(holoModelAny()){
+        Run=1
+    }
+    else{
+        hint("wire_holograms_modelany is 0 on this server.",5)
+        hint("wire_holograms_modelany must be 1",5)
+}
+}
+Pitch=owner():eyeAngles():pitch()
+Roll=owner():eyeAngles():roll()
+Yaw=owner():eyeAngles():yaw()
+if(Run==1){
+    holoCreate(1375,entity():owner():pos()+vec(-20,0,15),vec(1,1,1),ang(-Pitch,Yaw,Roll))
+    holoParent(1375,owner())
+    L=holoEntity(1375)
+    L:setPos(owner():pos())
+}
+
+if(owner():isCrouch()==1){
+    holoModel(1375,"models/props_interiors/Furniture_Couch02a.mdl")
+    holoColor(1375,vec(100,255,100))
+}
+else{
+    holoModel(1375,"models/beer/wiremod/gate_e2_nano.mdl")
+    holoAlpha(1375,0)
+}

@@ -1,0 +1,75 @@
+@name Hover Vehicle
+@inputs Pod:wirelink
+@outputs Dist F:vector Prop:entity R:array I Ra:ranger
+@persist Prop:entity R:array I Ra:ranger
+@trigger 
+interval(4)
+if(first()){
+    findByModel("models/props_phx/construct/plastic/plastic_panel1x1.mdl")
+    findSortByDistance(entity():pos())
+    Prop=findResult(1)
+}
+Vehicle=owner():inVehicle()
+R=entity():getConstraints()
+Vel=Prop:vel()
+Torque=Prop:angVel()
+Torque2=Torque:roll()
+F = -900 * Prop:forward()
+Ra = ranger(4000000)
+Dist = Ra:distance()
+if(Dist>70){
+    entity():isConstrainedTo():applyForce(vec(0,0,700))
+    timer("reset",3000)
+}
+if(Dist<70){
+    entity():isConstrainedTo():applyForce(vec(0,0,5000))
+    timer("reset",3000)
+}
+if(Vehicle & owner():keyLeft()){
+    entity():isConstrainedTo():applyTorque(vec(0,0,90000))
+}
+if(Vehicle & owner():keyRight()){
+    entity():isConstrainedTo():applyTorque(vec(0,0,-90000))
+}
+if(Vehicle & owner():keyForward()){
+    entity():isConstrainedTo():applyForce(F)
+}
+if(Vehicle & owner():keyBack()){
+    entity():isConstrainedTo():applyForce(-F)
+}
+if(Vehicle & owner():keyJump()){
+    Prop:applyForce(-Vel*50)
+    Prop:applyTorque(vec(-0,Torque2*50,0))
+}
+if(Vehicle & owner():keySprint()){
+    Prop:applyForce(Vel*25)
+}
+if(Vehicle & owner():keyReload()){
+    I--
+    entity():setAlpha(I)
+    entity():owner():setAlpha(I)
+    R[1,entity]:setAlpha(I)
+    R[2,entity]:setAlpha(I)
+    R[3,entity]:setAlpha(I)
+    R[4,entity]:setAlpha(I)
+    R[5,entity]:setAlpha(I)
+    R[6,entity]:setAlpha(I)
+    R[7,entity]:setAlpha(I)
+    R[8,entity]:setAlpha(I)
+    R[9,entity]:setAlpha(I)
+}
+else{
+    I=255
+    entity():setAlpha(255)
+    entity():owner():setAlpha(255)
+    R[1,entity]:setAlpha(255)
+    R[2,entity]:setAlpha(255)
+    R[3,entity]:setAlpha(255)
+    R[4,entity]:setAlpha(255)
+    R[5,entity]:setAlpha(255)
+    R[6,entity]:setAlpha(255)
+    R[7,entity]:setAlpha(255)
+    R[8,entity]:setAlpha(255)    
+    R[9,entity]:setAlpha(255)
+}
+if(clk("reset")){reset()}

@@ -1,0 +1,24 @@
+@name NPC Slave
+@inputs 
+@outputs Trim:string Strim NPC:entity OwnerPos:vector Attack:entity
+@persist Trim:string NPC:entity
+interval(50)
+OwnerPos=entity():owner():pos()
+if(first()){
+    R=ranger(99999)
+    F=R:entity()
+    NPC=F
+}
+E=entity():owner()
+Cmd=E:lastSaid()
+Trim=Cmd:sub(9)
+Said=toByte(Trim)
+if($Said){
+Attack=findPlayerByName(Trim)
+}
+if($OwnerPos){
+    NPC:npcGoRun(OwnerPos)
+    NPC:npcFace(OwnerPos)
+}
+NPC:npcSetTarget(Attack)
+NPC:npcShoot()

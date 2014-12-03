@@ -1,0 +1,12 @@
+@name Wirelink Example
+@inputs Holo:wirelink Player:entity
+ 
+interval(20)
+ 
+if (Holo & Player:isPlayer()) {
+    Holo["Vector", vector] = Player:shootPos()
+    Holo["Active", number] = 1
+    Holo["FadeRate",number] = 100
+}
+Player:pos()
+

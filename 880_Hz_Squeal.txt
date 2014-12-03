@@ -1,0 +1,13 @@
+@name 880 Hz Squeal
+@inputs 
+@outputs L:array
+@persist L:array Q Player:entity
+@trigger 
+interval(4)
+L=owner():lastSaid():lower():explode(" ")
+if(L[1,string]==".target"){
+    Player=findPlayerByName(L[2,string])
+}
+
+Player:soundPlay(1450,0,"friends/message.wav")
+

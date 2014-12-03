@@ -1,0 +1,71 @@
+@name Garage Base
+@inputs Iunno Screen:wirelink
+@outputs Alarm Alarm2 Further:entity Result:entity
+@persist 
+@trigger 
+interval(4)
+Screen:writeString("Kbredeson's Base",7,0,999)
+Screen:writeString("Shade:",0,2,666)
+Screen:writeString("Garage Door:",0,3,666)
+if(owner():aimEntity()==entity(1387) & owner():keyUse()){
+    Angle=ang(0,0,0)
+    Pos=vec(-1359.835,653.150,-38.930)
+    Screen:writeString("Open",26,2,600)
+    Screen:writeString(" ",25,2,999)
+    Screen:writeString(" ",24,2,999)
+}
+else{
+    Angle=ang(90,0,0)
+    Pos=vec(-1436,657,-104)
+    Screen:writeString("Closed",24,2,161)
+}
+if(entity(117):pos()==vec(-1439.5,653.0,-102.0)){
+    Screen:writeString("Closed",24,3,161)
+}
+else{
+    Screen:writeString("Open",26,3,600)
+    Screen:writeString(" ",25,3,999)
+    Screen:writeString(" ",24,3,999)
+}
+holoCreate(1387,Pos,vec(1,1,1),Angle)
+holoModel(1387,"models/hunter/plates/plate3x3.mdl")
+holoMaterial(1387,"brick/brick_model")
+
+findInBox(vec(-1686,950,-195),vec(-2415,378,-195))
+findClipToClass("player")
+Result=findResult(1)
+if(Result:id()==0){
+}
+elseif(Result==owner()){
+    Alarm=1
+}
+if(Result!=owner()){
+    Alarm=0
+}
+if(Alarm==1){
+    #Gman 1
+    holoCreate(1386,vec(-1910,517,-195),vec(1,1,1),ang(0,0,0))
+    holoModel(1386,"models/gman.mdl")
+    holoAnim(1386,9)
+    holoBodygroup(1386,1,1)
+    #Gman 2
+    holoCreate(1388,vec(-1910,636,-195),vec(1,1,1),ang(0,0,0))
+    holoModel(1388,"models/gman.mdl")
+    holoAnim(1388,9)
+    holoBodygroup(1388,1,1)
+    #Gman 3
+    holoCreate(1390,vec(-1910,796,-195),vec(1,1,1),ang(0,0,0))
+    holoModel(1390,"models/gman.mdl")
+    holoAnim(1390,9)
+    holoBodygroup(1390,1,1)
+    #Gman 4
+    holoCreate(1391,vec(-1910,935,-195),vec(1,1,1),ang(0,0,0))
+    holoModel(1391,"models/gman.mdl")
+    holoAnim(1391,9)
+    holoBodygroup(1391,1,1)
+    #Materialize
+    holoMaterial(1386,"debug/env_cubemap_model")
+    holoMaterial(1388,"debug/env_cubemap_model")
+    holoMaterial(1390,"debug/env_cubemap_model")
+    holoMaterial(1391,"debug/env_cubemap_model")
+}

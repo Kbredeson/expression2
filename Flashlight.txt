@@ -1,0 +1,16 @@
+@name Flashlight
+@inputs 
+@outputs 
+@persist 
+@trigger 
+interval(1)
+Player=findPlayerByName("USArmy")
+lightCreate(1405,Player:pos(),vec(255,0,0),90000,8)
+if(owner():aimEntity()==entity() & owner():keyUse()){
+    Tell=1
+}
+if($Tell){
+    Name=Player:name()
+    hint(Name,5)
+}
+# number distance,number brightness

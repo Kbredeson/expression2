@@ -1,0 +1,20 @@
+@name Holo Helix
+@inputs Holo:wirelink Holo2:wirelink Active
+@persist Timer
+ 
+interval(20)
+Timer += 0.02
+PlayerPos = owner():pos()
+ 
+Holo["X",number] = sin(Timer*180)*20 + PlayerPos:x()
+Holo["Y",number] = cos(Timer*180)*20 + PlayerPos:y()
+Holo["Z",number] = cosr(Timer)*35 + 35 + PlayerPos:z()
+ 
+Holo2["X",number] = sin(Timer*180 + 180)*20 + PlayerPos:x()
+Holo2["Y",number] = cos(Timer*180 + 180)*20 + PlayerPos:y()
+Holo2["Z",number] = cosr(Timer)*35 + 35 + PlayerPos:z()
+ 
+Holo["FadeRate",number] = 50
+Holo["Active",number] = Active
+Holo2["FadeRate",number] = 50
+Holo2["Active",number] = Active

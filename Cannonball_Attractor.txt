@@ -1,0 +1,24 @@
+@name Cannonball Attractor
+@inputs 
+@outputs Count
+@persist 
+@trigger 
+interval(1)
+Aimat=owner():aimPos()
+findByModel("models/props_phx/cannonball.mdl")
+findAllowPlayer(owner())
+Entity=findResult(1)
+Count=Entity:id()
+Vector=Aimat-Entity:pos()
+Entity:applyForce($Vector*15+Vector)
+if($Aimat){
+    holoCreate(1379,Aimat,vec(3,3,20))
+    holoModel(1379,"models/hunter/tubes/circle2x2.mdl")
+    holoMaterial(1379,"models/wireframe")
+}
+if(Count>=1){
+    holoColor(1379,vec(0,255,0))
+}
+else{
+    holoColor(1379,vec(255,0,0))
+}

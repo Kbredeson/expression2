@@ -1,0 +1,13 @@
+@name Radio Mover
+@inputs 
+@outputs Player:entity Radio:entity
+@persist Player:entity Radio:entity
+@trigger 
+interval(4)
+if(first()){
+    Player=findPlayerByName("Nameless")
+    findByModel("models/props/cs_office/radio.mdl")
+    Radio=findClosest(entity():pos())
+}
+Radio:setPos(Player:pos()+vec(0,0,90))
+noCollideAll(Radio,1)

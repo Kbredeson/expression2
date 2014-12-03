@@ -1,0 +1,10 @@
+@name Back To The Future
+@inputs Deloreon:entity 
+@outputs Speed:vector
+@persist 
+@trigger 
+
+interval(4)
+
+Speed=Deloreon:vel()
+

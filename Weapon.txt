@@ -1,0 +1,32 @@
+@name Weapon
+@inputs 
+@outputs R:array Prop:entity Prop2:entity Aim:vector Vector:vector Vel:vector Q
+@persist R:array Vector:vector Q
+@trigger 
+interval(4)
+if(first()){
+    propSpawnEffect(0)
+    Prop2=propSpawn("models/hunter/tubes/tube1x1x4.mdl",entity():pos(),entity():angles(),1)
+    hint("Cannon",5)
+    hint("Made By Kbredeson",5)
+}
+R=owner():lastSaid():explode(" ")
+if(R[1,string]:lower()==".arm" & Q==0){
+    Prop=propSpawn("models/props_c17/oildrum001_explosive.mdl",entity():pos(),entity():angles(),0)
+    Prop:setPos(Prop2:pos())
+    Aim=Prop2:up()
+    Q=1
+    hint("Armed",2)
+}
+    Vector=Aim*999999999
+if(R[1,string]:lower()==".fire"){
+    Prop:applyForce(Vector)
+    Prop:applyAngForce(ang(0,900,0))
+    if(Q==1){
+        hint("Fire in the hole!",2)
+        owner():soundPlay(1381,0,"ambient/explosions/explode_9.wav")
+
+    }
+    Q=0
+
+}

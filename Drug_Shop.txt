@@ -1,0 +1,73 @@
+@name Drug Shop
+@inputs  MusD HerD CocD MarD LSDD PCPD MusP HerP CocP MarP LSDP PCPP MusI HerI CocI MarI LSDI PCPI Amount
+@outputs Spawnmnt MusA HerA CocA MarA LSDA PCPA MusU HerU CocU MarU LSDU PCPU
+@persist 
+
+runOnTick(1)
+
+if(MusD<34){ 
+    MusA=0 timer("reset",3000)
+}
+elseif(Amount>=MusP){
+    MusA=1 
+}
+
+if(HerD<34){
+    HerA=0 timer("reset",3000)
+}
+elseif(Amount>=HerP){
+    HerA=1 
+}
+if(CocD<34){
+    CocA=0 timer("reset",3000)
+}
+elseif(Amount>=CocP){
+    CocA=1 
+}
+if(MarD<34){
+    MarA=0 timer("reset",3000)
+}
+elseif(Amount>=MarP){
+    MarA=1 
+}
+
+if(LSDD<34){
+    LSDA=0 timer("reset",3000)
+}
+elseif(Amount>=LSDP){
+    LSDA=1
+}
+
+if(PCPD<34){
+    PCPA=0 timer("reset",3000)
+}
+elseif(Amount>=PCPP){
+    PCPA=1
+}
+
+
+if(MusA & MusI){
+    MusU=1 Spawnmnt=MusP timer("reset",3000)
+} 
+
+if(HerA & HerI){
+    HerU=1 Spawnmnt=HerP timer("reset",3000)
+}
+
+if(CocA & CocI){
+    CocU=1 Spawnmnt=CocP timer("reset",3000)
+}
+
+if(MarA & MarI){
+    MarU=1 Spawnmnt=MarP timer("reset",3000)
+}
+
+if(LSDA & LSDI){
+    LSDU=1 Spawnmnt=LSDP timer("reset",3000)
+}
+
+if(PCPA & PCPI){
+    PCPU=1 Spawnmnt=PCPP timer("reset",3000)
+}
+
+if(clk("reset")){reset()}

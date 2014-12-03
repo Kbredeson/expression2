@@ -1,0 +1,10 @@
+@name Hovercraft
+@inputs 
+@outputs 
+@persist 
+@trigger 
+
+interval(1)
+
+applyForce(-entity():vel())
+applyAngForce(-entity():angVel())

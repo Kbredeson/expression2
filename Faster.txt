@@ -1,0 +1,25 @@
+@name Rotator
+@inputs 
+@outputs Owner:string Modelname:string Selected:string String:string Select
+@persist Selected:string
+@trigger 
+if(first())
+{
+    hint("Spinning Props",5)
+    hint("Made by Kbredeson",5)
+}
+interval(10)
+Select=entity():owner():isFlashlightOn()
+String=entity():owner():aimEntity():model()
+if(Select==1){
+    Selected = String
+}
+if(clk()){
+findByModel(Selected)
+findIncludePlayerProps(entity():owner())
+N=findResult(1)
+Owner = N:owner():name()
+Modelname = N:model()
+}
+Angle=ang(0,360,0)
+N:applyAngForce($Angle*999+Angle)

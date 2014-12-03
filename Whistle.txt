@@ -1,0 +1,17 @@
+@name Whistle
+@inputs 
+@outputs
+@persist Q
+@trigger 
+interval(4)
+if(first()){
+    Q=0
+}
+if(owner():keyReload() & Q==0){
+    owner():soundPlay(1420,0,"coach/coach_look_here.wav")
+    Q=1
+}
+elseif(!owner():keyReload()){
+    soundStop(1420,0)
+    Q=0
+}
