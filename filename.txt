@@ -1,0 +1,15 @@
+e2function number entity:isConstrainedTo(entity target, string type)
+	if not validEntity(this) then return 0 end
+	if not validEntity(target) then return 0 end
+	if not constraint.HasConstraints(this) then return 0 end
+	if not constraint.HasConstraints(target) then return 0 end
+	
+	local constraints = constraint.FindConstraints(this, type)
+	for _,constr in pairs(constraints) do
+		if validEntity(constr.Ent2) and constr.Ent2 == target and constr.Ent2 ~= this then
+			return 1
+		end
+	end
+
+	return 0
+end

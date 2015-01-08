@@ -1,11 +1,13 @@
 @name Alarm
 @inputs  Reset
-@outputs Alarm Inbeam:string Isplayer
+@outputs Alarm Inbeam:string Isplayer C D
 @persist Alarm
 @trigger 
 interval(4)
-R=ranger(999)
-Owner1="A$AP Kbredeson"
+C++ C++ C++ C++ C++ C++ C++ C++ C++ C++ C++ C++ C++ C++ C++ C++
+D=sin(C)*2
+R=ranger(999,1,0)
+Owner1="Kbredeson"
 Owner2=""
 Owner3=""
 Owner4=""
@@ -16,7 +18,9 @@ if(Isplayer==0){
 elseif(Owner1!=Inbeam|Owner2!=Inbeam|Owner3!=Inbeam|Owner4!=Inbeam){
     Alarm=1
 }
-if(Owner1==Inbeam | Owner2==Inbeam | Owner3==Inbeam | Owner4==Inbeam){ 
+if(Isplayer==0){
+}
+elseif(Owner1==Inbeam | Owner2==Inbeam | Owner3==Inbeam | Owner4==Inbeam){ 
     Alarm=0
 }
     if($Alarm & Alarm==1){

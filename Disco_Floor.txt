@@ -89,19 +89,13 @@ holoColor(1405,vec(Red6,Green6,Blue6))
 holoColor(1406,vec(Red3,Green3,Blue3))
 holoColor(1407,vec(Red5,Green5,Blue5))
 holoColor(1408,vec(Red4,Green4,Blue4))
-lightCreate(1376,entity():pos()+vec(0,0,Height),vec(Red,Green,Blue),9000,10)
 C++
 Rotatio=ang(vec(0,C,0))
 Rotation=Rotatio*3
 holoAng(1410,Rotation)
 Ballpos=Ball ? owner():pos()+vec(0,0,60) : entity():pos()+HeightVec
-if(Ball==1){
-    lightParent(1376,entity():owner())
-}
-else{
-    lightUnparent(1376)
-}
 holoPos(1410,Ballpos)
+lightCreate(1376,Ballpos,vec(Red,Green,Blue),9000,10)
 if(R[1,string]==".flash"){
     Stat=1
 }

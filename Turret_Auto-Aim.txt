@@ -1,0 +1,11 @@
+@name Turret Auto-Aim
+@inputs 
+@outputs Bearing Elevation Origin:vector
+@persist 
+@trigger 
+interval(4)
+Origin = entity():up()*90
+Target = owner()
+Pos = entity():pos()
+Bearing = bearing(Pos,ang(entity():up()*180),Target:pos())
+Elevation = Target:elevation(Pos)

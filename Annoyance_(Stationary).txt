@@ -1,0 +1,22 @@
+@name Annoyance
+@inputs 
+@outputs
+@persist Q
+@trigger 
+if(first()){
+    Q=0
+}
+    entity():soundPlay(1420,0,"synth/12_5_pwm_1760.wav")
+    entity():soundPlay(1421,0,"synth/saw_1760.wav")
+    entity():soundPlay(1422,0,"synth/sine_440.wav")
+    entity():soundPlay(1423,0,"synth/white_noise.wav")
+    entity():soundPlay(1424,0,"synth/pink_noise.wav")
+    entity():soundPlay(1425,0,"synth/saw_inverted_1760.wav")
+    entity():soundPlay(1426,0,"synth/25_pwm_880.wav")
+    entity():soundPlay(1427,0,"synth/sine.wav")
+    entity():soundPlay(1428,0,"synth/25_pwm_880.wav")
+    entity():soundPlay(1429,0,"synth/sine_1760.wav")
+    entity():soundPlay(1430,0,"synth/sine_880.wav")
+    entity():soundPlay(1431,0,"synth/square_1760.wav")
+    Q=1
+

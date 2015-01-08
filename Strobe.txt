@@ -1,0 +1,9 @@
+@name 
+@inputs 
+@outputs Blink C
+@persist 
+@trigger
+interval(0.001)
+Colour=vec(255,255,255)
+lightCreate(1962,entity():pos(),Colour,999999,999999)
+

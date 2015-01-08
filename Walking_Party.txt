@@ -6,7 +6,7 @@
 @model models/balloons/balloon_star.mdl
 interval(10)
 if(first()){
-    Player=findPlayerByName("Kbred")
+    Player=findPlayerByName("Kbredeson")
     findByModel("models/props/cs_office/radio.mdl")
     Radio=findClosest(entity():pos())
     

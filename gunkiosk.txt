@@ -21,7 +21,7 @@ if(S2>0&Amount>=P2)
     if(B2){CD=1 timer("reset",3000) U2=1 SpawnAmount=P2}
 }
 
-if(S3>0&Amount>=)
+if(S3>0&Amount>=P3)
 {
     if(B3){CD=1 timer("reset",3000) U3=1 SpawnAmount=P3}
 }

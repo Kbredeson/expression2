@@ -3,9 +3,12 @@
 @outputs 
 @persist 
 @trigger 
-interval(1)
-Player=findPlayerByName("USArmy")
-lightCreate(1405,Player:pos(),vec(255,0,0),90000,8)
+interval(4)
+if(first()|duped()){
+    Player=findPlayerByName("Kbred")
+    lightCreate(1405,Player:pos(),vec(0,2550,0),900000,80000)
+    lightParent(1405,entity():owner())
+}
 if(owner():aimEntity()==entity() & owner():keyUse()){
     Tell=1
 }
