@@ -1,0 +1,127 @@
+@name Printer Thief
+@inputs S:wirelink Reset Up Down Cloak Uncloak Jump Return Sethomepos
+@outputs Jump Use Printer:entity R:array Count Selection Selected:string Select:entity Colour:string Entity:entity P:array Vec:array Targetpos:vector
+@persist R:array FirstPos:vector Vec:array VecA:array
+@trigger 
+interval(4)
+if(first()|duped()){
+    findByModel("models/props_c17/consolebox01a.mdl")
+    R=findToArray()
+    Selection=1 
+    FirstPos=entity():pos()
+    entity():propGravity(0.1)
+    P=entity():getConstraints()
+  #  for(O=0, P:count()) {
+  #  P[O,entity]:propGravity(0.1)
+  #  }
+}
+P=entity():getConstraints()
+if(Sethomepos & ~Sethomepos){
+    FirstPos=entity():pos()
+}
+#Variables
+Count=R:count()
+Coordinates=Entity:pos()
+ZPos=entity():pos():z()
+#Reset Screen
+S:writeCell(2041,1)
+#Words
+S:writeString("Printer Thief",8,1,999,0)
+S:writeString("Selected: " + Selection:toString(),0,3,888,0)
+S:writeString("ID: " + Entity:id():toString(),4,4,666,0)
+S:writeString("Type:" + " Placeholder",2,5,666,0)
+S:writeString(Selected,0,6,666,0)
+#Selectomatic
+LLSelect=R[Selection-2,entity]
+LSelect=R[Selection-1,entity]
+Select=R[Selection,entity]
+HSelect=R[Selection+1,entity]
+HHSelect=R[Selection+2,entity]
+S:writeString(LLSelect:owner():name()+LLSelect:id():toString(),11,9,555,155)
+S:writeString(LSelect:owner():name()+LSelect:id():toString(),11,10,555,155)
+S:writeString(Select:owner():name()+Select:id():toString(),11,11,888,166)
+S:writeString(HSelect:owner():name()+HSelect:id():toString(),11,12,555,155)
+S:writeString(HHSelect:owner():name()+HHSelect:id():toString(),11,13,555,155)
+#Else
+if(LLSelect:id():toString()=="0"){
+    S:writeString(" ",11,9,0,0)
+}
+if(LSelect:id():toString()=="0"){
+    S:writeString(" ",11,10,0,0)
+}
+if(Select:id():toString()=="0"){
+    S:writeString(" ",11,11,0,0)
+}
+if(HSelect:id():toString()=="0"){
+    S:writeString(" ",11,12,0,0)
+}
+if(HHSelect:id():toString()=="0"){
+    S:writeString(" ",11,13,0,0)
+}
+#TargetPos
+Targetpos=Select:pos()+vec(0,0,30)
+#Rescan
+if(Reset & ~Reset){
+   findByModel("models/props_c17/consolebox01a.mdl")
+   R=findToArray()
+} 
+
+#Colour to Type
+
+#Selection Menu
+if(Up & ~Up){
+    Selection=Selection+1
+}
+if(Down & ~Down){
+    Selection=Selection-1
+}
+if(Selection<1){
+    Selection=1
+}
+if(Selection>Count){
+    Selection=Count
+}
+Selected=Colour + " Owner: " + Select:owner():name()
+#Cloak
+if(Cloak & ~Cloak){
+    entity():setAlpha(0)
+    for(I=0, P:count()) {
+    P[I,entity]:setAlpha(0)
+}
+}
+if(Uncloak & ~Uncloak){
+    entity():setAlpha(255)
+    for(I=0, P:count()) {
+    P[I,entity]:setAlpha(255)
+}
+}
+#Movement
+if(Jump & ~Jump){
+    entity():propFreeze(1)
+    for(L=0, P:count()){
+    P[L,entity]:parentTo(entity())
+    P[L,entity]:propFreeze(1)
+    Vec[L,vector]=toLocal(entity():pos(),entity():angles(),P[L,entity]:pos(),P[L,entity]:angles())
+    VecA[L,angle]=toLocalAng(entity():pos(),entity():angles(),P[L,entity]:pos(),P[L,entity]:angles())
+    }
+    for(J=0, P:count()){
+    P[J,entity]:setPos(Targetpos+toWorld(Vec[J,vector],VecA[J,angle],entity():pos(),entity():angles()))
+    }
+    entity():setPos(Targetpos)
+    entity():setAng(ang(vec(0,0,0)))
+}
+if(Return & ~Return){
+    entity():propFreeze(1)
+    for(L=0, P:count()){
+    P[L,entity]:parentTo(entity())
+    P[L,entity]:propFreeze(1)
+    Vec[L,vector]=toLocal(entity():pos(),entity():angles(),P[L,entity]:pos(),P[L,entity]:angles())
+    VecA[L,angle]=toLocalAng(entity():pos(),entity():angles(),P[L,entity]:pos(),P[L,entity]:angles())
+    }
+    for(J=0, P:count()){
+    P[J,entity]:setPos(FirstPos+toWorld(Vec[J,vector],VecA[J,angle],entity():pos(),entity():angles()))
+    }
+    entity():setPos(FirstPos)
+    entity():setAng(ang(vec(0,0,0)))
+}
+

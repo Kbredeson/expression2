@@ -1,0 +1,49 @@
+@name Aimbot
+@inputs
+@outputs R:array Target:vector Name:string Aimpos:vector Bearing Elevation Dist1 Dist
+@persist Refresh AimClose
+@trigger 
+interval(4)
+if(first()){
+    AimClose=1
+    AimSelect=0
+}
+findByClass("prop_physics")
+C=owner():lastSaid()
+if(C:lower():sub(6)=="Closest"){
+    AimClose=1
+    AimSelect=0
+}
+if(C:lower():sub(6)=="Select"){
+    AimClose=0
+    AimSelect=1
+}
+if(AimClose==1){
+    findSortByDistance(entity():owner():pos())
+    R=findToArray()
+    Target=R[1,entity]:pos()+vec(0,0,65)
+    Name=R[1,entity]:model()
+}
+TargetEnt=R[1,entity]
+Bearing=bearing(owner():pos(),owner():eyeAngles(),Target+TargetEnt:vel()/10)
+Elevation=elevation(owner():pos(),owner():eyeAngles(),Target-vec(0,0,65))
+if(TargetEnt!=entity(0)){
+    if(Bearing<0){
+        concmd("+left")
+        concmd("-right")
+    }
+    if(Bearing>0){
+        concmd("+right")
+        concmd("-left")
+    } 
+    if(Bearing==0 | owner():aimEntity()==R[1,entity]){
+        concmd("cl_yawspeed 50")
+    }
+}
+else{
+    concmd("-right")
+    concmd("-left")
+}
+Dist1=R[1,entity]:pos():distance(owner():pos())/200
+Dist=clamp(Dist1,0,1)
+concmd("cl_yawspeed "+(abs(Bearing)*(20*Dist)):toString())

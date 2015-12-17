@@ -1,266 +1,49 @@
-@name [E2 Duplicator v0.2] /LukS
-@inputs RAM:wirelink Hud:wirelink
-@outputs Data:string # For debugging
-@persist Prop TotalProps PropEnt:entity CheckProp Constraint
-@persist Working Mode Action
-@persist Point:vector HeightOffset AngleOffset
-@outputs [Props Elements Constraints]:array
-runOnTick(1)
-runOnChat(1)
-runOnFile(1)
-
-# Spawn delay timer
-if(first()|duped()){ timer("spawn_delay", 1), hint("LukS's E2 Duplicator. Use it only at own risk!", 7) }
-if(clk("spawn_delay")){ timer("spawn_delay", 300) } # Change spawn delay
-
-# Message about uploaded file.
-if(fileClk()){ printColor(vec(0, 255, 0), "[E2_Dup] File was uploaded...") }
-
-# Chat commands
-if(chatClk(owner()) & !Working)
-{
-    LastSaid = owner():lastSaid():explode(">")
-    
-    if(LastSaid[1, string] == "l" | LastSaid[1, string] == "load")
-    {
-        hideChat(1)
-        
-        # Load file to RAM.
-        Filename = "dup_"+LastSaid[2, string]+".txt"
-            # Write data to RAM
-        }
-    }
-    if(LastSaid[1, string] == "s" | LastSaid[1, string] == "save")
-    {
-        hideChat(1)
-        
-        Filename = "dup_"+LastSaid[2, string]+".txt"
-        Content = RAM:readString(0)
-        
-        if(LastSaid[3, string] != "")
-        {
-            OldContent = fileRead(Filename)
-            Dups = (OldContent == "") ? table() : glonDecodeTable(OldContent)
-            printColor(vec(0, 0, 255), "[E2_Dup] Old duplication file contents "+Dups:count()+" dup(s)")
-            
-            Dups[LastSaid[3, string], string] = Content
-            fileWrite(Filename, glonEncode(Dups))
-            
-            printColor(vec(0, 255, 0), "[E2_Dup] Write complete.")
-        } else {
-            fileWrite(Filename, Content)
-            printColor(vec(0, 255, 0), "[E2_Dup] Write complete.")
-        }
-    }
-    if(LastSaid[1, string] == "d" | LastSaid[1, string] == "duplicate")
-    {
-        hideChat(1)
-        
-        # Radius
-        Radius = max(LastSaid[2, string]:toNumber(), 100)
-        
-        printColor(vec(0, 0, 255), "[E2_Dup] Start duplicating...")
-        
-        # Variables
-        Working = 1, Mode = 0, Action = 0
-        
-        # Set point
-        Point = owner():aimPos()
-    
-        # Find objects
-        findIncludeClass("prop_physics")
-        #findIncludePlayerProps(owner()) # Only own props
-        findInSphere(Point, Radius)
-        
-        Props = findToArray()
-        TotalProps = Props:count()
-        
-        if(TotalProps == 0)
-        {
-            printColor(vec(255, 0, 0), "[E2_Dup] Error: none props found.")
-            reset()
-        } else {
-            printColor(vec(0, 255, 0), "[E2_Dup] Found "+TotalProps+" prop(s)")
-            
-            # Start work (default mode is 0, write)
-            Working = 1
-            
-            # Make a sign for our data.
-            Data = "DUPDATA2|"+TotalProps
-            
-            # Default
-            Prop = 0
-        }
-        
-        exit()
-    }
-    if(LastSaid[1, string] == "r" | LastSaid[1, string] == "restore")
-    {
-        hideChat(1)
-        
-        # Set variables
-        Working = 1, Mode = 1, Action = 0, Prop = 0
-        
-        # Set point
-        Point = owner():aimPos()
-        
-        # Offsets
-        HeightOffset = LastSaid[2, string]:toNumber()
-        AngleOffset = LastSaid[3, string]:toNumber()
-        
-        printColor(vec(0, 255, 0), "[E2_Dup] Reading... Please, wait!")
-    }
-# Mode0. Action0. -> Getting props data
-while(Mode == 0 & Action == 0 & Working & perf())
-{
-    # Iterator
-    Prop++
-    if(Prop > TotalProps)
-    {
-        # Next action -> set info for while of constraints checking
-        Action = 1, Prop = 0, Constraints = array()
-        break
-    }
-    
-    # Structure: <model>|<pos offset>|<ang>|<material>|<color>
-    PropEnt = Props[Prop, entity]
-    
-    # ----=====[ FIX THAT ]=====----
-    # Get material
-    # Bug: sometimes e2 crashes with lua error (something about concate)
-    # Comment next string if e2 crashes!
-    Material = PropEnt:getMaterial()
-    #Material = ""
-    # ----=====[ FIX THAT ]=====----
-    
-    Data += "|"+PropEnt:model()
-    +"|"+(PropEnt:pos()-Point):toString()
-    +"|"+PropEnt:angles():toString()
-    +"|"+Material
-    +"|"+PropEnt:getColor():toString()
-        
-    # Percent
-    Hud["A", number] = (Prop+1)/TotalProps*100
+@name Aimbot
+@inputs
+@outputs R:array Target:vector Name:string Aimpos:vector Bearing Elevation Dist1 Dist
+@persist Refresh AimClose
+@trigger 
+interval(4)
+if(first()){
+    AimClose=1
+    AimSelect=0
 }
-
-# Mode0. Action1.-> Set info for while of constraints checking.
-if(Mode == 0 & Action == 1 & Working)
-{
-    # Iterator
-    Prop++
-    if(Prop > TotalProps)
-    { Action = 3, exit() } # End
-    
-    # Done
-    Action = 2, CheckProp = 0
+findByClass("prop_physics")
+C=owner():lastSaid()
+if(C:lower():sub(6)=="Closest"){
+    AimClose=1
+    AimSelect=0
 }
-
-while(Mode == 0 & Action == 2 & Working & perf())
-{
-    # Iterator
-    CheckProp++
-    if(CheckProp > TotalProps)
-    { Action = 1 } # End
-    
-    # debug
-    #print("Prop: "+Prop+" Check: "+CheckProp)
-    
-    # Check constraint
-    if(Props[Prop, entity]:isConstrainedTo(Props[CheckProp, entity], "Weld"))
-    {Constraints:pushString(Prop+">"+CheckProp)}
+if(C:lower():sub(6)=="Select"){
+    AimClose=0
+    AimSelect=1
 }
-
-if(Mode == 0 & Working & Action == 3)
-{
-    # Ok, save constraints and write data to RAM
-    Data += "|"+Constraints:concat("|")
-    
-    # Write
-    RAM:writeString(0, Data)
-    
-    # Ok, clear
-    Working = 0, Mode = 0, Action = 0, Props = array()
-    
-    printColor(vec(0, 255, 0), "[E2_Dup] Done!")
+if(AimClose==1){
+    findSortByDistance(entity():owner():pos())
+    R=findToArray()
+    Target=R[1,entity]:pos()+vec(0,0,65)
+    Name=R[1,entity]:model()
 }
-
-# Mode 1 -> Reading
-if(Mode == 1 & Working)
-{
-    # Action0. Read & Parse
-    if(Action == 0)
-    {
-        Data = RAM:readString(0)
-        
-        # Ok, read success. Just parse it.
-        Elements = Data:explode("|")
-            
-        # Check signature
-        if(Elements[1, string] != "DUPDATA2")
-        {
-            printColor(vec(255, 0, 0), "[E2_Dup] Can't find dup header! Invalid duplication?")
-            Working = 0
-        }
-        TotalProps = Elements[2, string]:toNumber()
-        printColor(vec(0, 255, 0), "[E2_Dup] Found dup with "+TotalProps+" prop(s)")
-            
-        # Next action
-        Action = 1, Prop = 0
+TargetEnt=R[1,entity]
+Bearing=bearing(owner():pos(),owner():eyeAngles(),Target+TargetEnt:vel()/10)
+Elevation=elevation(owner():pos(),owner():eyeAngles(),Target-vec(0,0,65))
+if(TargetEnt!=entity(0)){
+    if(Bearing<0){
+        concmd("+left")
+        concmd("-right")
     }
-    
-    # Action1. Spawn
-    if(Action == 1 & clk("spawn_delay"))
-    {        
-        # Get position
-        VecParts = Elements[2+(Prop*5)+2, string]:explode(",")
-        Pos = vec(VecParts[1, string]:replace("[", ""):toNumber(), VecParts[2, string]:toNumber(), VecParts[3, string]:replace("]", ""):toNumber()) 
-        
-        # Get angle
-        AngleParts = Elements[2+(Prop*5)+3, string]:explode(",")
-        Angle = ang(AngleParts[1, string]:replace("[", ""):toNumber(), AngleParts[2, string]:toNumber(), AngleParts[3, string]:replace("]", ""):toNumber()) 
-        
-        # Get color
-        ColorParts = Elements[2+(Prop*5)+5, string]:explode(",")
-        Color = vec(ColorParts[1, string]:replace("[", ""):toNumber(), ColorParts[2, string]:toNumber(), ColorParts[3, string]:replace("]", ""):toNumber()) 
-        
-        # Spawn prop
-        Ent = propSpawn(Elements[2+(Prop*5)+1, string], Point+Pos+vec(0, 0, HeightOffset), Angle+ang(0, AngleOffset, 0), 1)
-        Props:pushEntity(Ent)
-        
-        # Set material & color
-        Ent:setMaterial(Elements[2+(Prop*5)+4, string])
-        Ent:setColor(Color)
-        
-        
-        # Percent
-        Hud["A", number] = (Prop)/TotalProps*100
-        
-        if(Prop+1 == TotalProps)
-        {
-            printColor(vec(0, 255, 0), "[E2_Dup] Spawning done! Making constraints...")
-            
-            Action = 2, Constraint = 0
-        } else {
-            Prop++
-        }
-    }
-    
-    # Action2. -> Make constraints
-    while(Action == 2 & perf())
-    {
-        ConstraintData = Elements[2+(TotalProps*5)+(Constraint+1), string]
-        ConstraintDataElem = ConstraintData:explode(">")
-        What = ConstraintDataElem[1, string]:toNumber()
-        To = ConstraintDataElem[2, string]:toNumber()
-        
-        if(What == 0) # End
-        {
-            printColor(vec(0, 255, 0), "[E2_Dup] Concraption restored! Props: "+TotalProps+", Constraints: "+(Constraint+1))
-            Action = 0, Mode = 0, Working = 0, Props = array(), break
-        } else {
-            Props[What, entity]:weld(Props[To, entity], 0, 0)
-        }
-        
-        Constraint++
+    if(Bearing>0){
+        concmd("+right")
+        concmd("-left")
+    } 
+    if(Bearing==0 | owner():aimEntity()==R[1,entity]){
+        concmd("cl_yawspeed 50")
     }
 }
+else{
+    concmd("-right")
+    concmd("-left")
+}
+Dist1=R[1,entity]:pos():distance(owner():pos())/200
+Dist=clamp(Dist1,0,1)
+concmd("cl_yawspeed "+(abs(Bearing)*(20*Dist)):toString())

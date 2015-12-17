@@ -1,0 +1,10 @@
+@name Bomb
+@inputs 
+@outputs Explode
+@persist 
+@trigger 
+interval(4)
+if(duped()){
+    Explode==1
+}
+
